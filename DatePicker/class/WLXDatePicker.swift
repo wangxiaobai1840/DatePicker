@@ -132,13 +132,13 @@ class WLXDatePicker: UIView {
     }
     // 格式化选中数据
     fileprivate func formatDate()->(beginString:String,endString:String){
-        let month = monthValue > 10 ? ("\(monthValue)") : ("0\(monthValue)")
-        let day = dayValue > 10 ? ("\(dayValue)") : ("0\(dayValue)")
-        let hour = hourValue > 10 ? ("\(hourValue)") : ("0\(hourValue)")
-        let min = minValue > 10 ? ("\(minValue)") : ("0\(minValue)")
-        let sec = secValue > 10 ? ("\(secValue)") : ("0\(secValue)")
-        let eHour = endHour > 10 ? ("\(endHour)") : ("0\(endHour)")
-        let eMin = endMin > 10 ? ("\(endMin)") : ("0\(endMin)")
+        let month = monthValue >= 10 ? "\(monthValue)" : "0\(monthValue)"
+        let day = dayValue >= 10 ? "\(dayValue)" : "0\(dayValue)"
+        let hour = hourValue >= 10 ? "\(hourValue)" : "0\(hourValue)"
+        let min = minValue >= 10 ? "\(minValue)" : "0\(minValue)"
+        let sec = secValue >= 10 ? "\(secValue)" : "0\(secValue)"
+        let eHour = endHour >= 10 ? "\(endHour)" : "0\(endHour)"
+        let eMin = endMin >= 10 ? "\(endMin)" : "0\(endMin)"
         
         
         if self.dateFormat == .YYYYMMddHHmm {
@@ -166,19 +166,6 @@ class WLXDatePicker: UIView {
         }
         return ("","")
     }
-    
-    fileprivate func formatString(originFormatString:String,dateFormatString:String,dataString:String) ->String{
-        let format = DateFormatter.dateFormat(fromTemplate: originFormatString, options: 0, locale: nil)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-        let resultData:Date = dateFormatter.date(from: dataString)!
-        let dateFormat1 = DateFormatter.dateFormat(fromTemplate: dateFormatString, options: 0, locale: Locale.init(identifier: "zh_CN"))
-        let dateFormatter1 = DateFormatter()
-        dateFormatter1.dateFormat = dateFormat1
-        let dateString  = dateFormatter1.string(from: resultData)
-        return dateString
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

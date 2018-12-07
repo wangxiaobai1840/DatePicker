@@ -31,6 +31,12 @@ class ViewController: UIViewController {
         let begin  = dateFormatter.date(from: "2019-8-9 19:50:54")
         let end = dateFormatter.date(from: "2018-8-9 20:16:45")
         
+/**
+        1. dateFormat 返回值格式以及选择器模式
+        2.beginYear 开始年份
+        3. beginDate 默认开始时间
+        4. endDate默认结束时间
+*/
         datePickerView = WLXDatePicker.init(frame: CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: self.view.frame.height), dateFormat: .YYYYMMddHHmm, beginYear: 2000, beginDate: begin!, endDate: end!)
         
         datePickerView.submitActionBlock = { [weak self] beginDate,endDate in

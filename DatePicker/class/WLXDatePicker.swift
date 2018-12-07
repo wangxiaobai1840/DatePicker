@@ -18,7 +18,7 @@
 
 import UIKit
 
- private let YearLimit = 99 // 从当前年份往前多少年
+private let YearLimit = 99 // 从当前年份往后多少年
  
 class WLXDatePicker: UIView {
     
@@ -132,41 +132,37 @@ class WLXDatePicker: UIView {
     }
     // 格式化选中数据
     fileprivate func formatDate()->(beginString:String,endString:String){
-        if self.dateFormat == .YYYYMMddHHmm || dateFormat == .YYYYMMddHHmm1{
-            let resultString = "\(yearValue)"+"-"+"\(monthValue)"+"-"+"\(dayValue)"+" "+"\(hourValue)"+":"+"\(minValue)"+":00"
-            var dateFormatString = ""
-            if self.dateFormat == .YYYYMMddHHmm {
-                dateFormatString = "YYYYMMdd HH:mm:ss"
-            }else if self.dateFormat == .YYYYMMddHHmm1 {
-                dateFormatString = "YYYY-MM-dd HH:mm:ss"
-            }
-            let dateString  = self.formatString(originFormatString: "YYYY-MM-dd HH:mm:ss", dateFormatString: dateFormatString, dataString: resultString)
-            return (dateString,"")
-            
-        }else if self.dateFormat == .YYYYMMdd || self.dateFormat == .YYYYMMdd1 {
-            
-            let resultString = "\(yearValue)"+"-"+"\(monthValue)"+"-"+"\(dayValue)"
-            var dateFormatString = ""
-            if self.dateFormat == .YYYYMMdd {
-                dateFormatString = "YYYYMMdd"
-            }else if self.dateFormat == .YYYYMMdd1 {
-                dateFormatString = "YYYY-MM-dd"
-            }
-            let dateString  = self.formatString(originFormatString: "YYYY-MM-dd", dateFormatString: dateFormatString, dataString: resultString)
-            return (dateString,"")
-            
-        }else if self.dateFormat == .HHmmHHmm {
-            let beginString = "\(hourValue)"+":"+"\(minValue)"
-            let endString = "\(endHour)"+":"+"\(endMin)"
-            let dateFormatString = "HH:mm"
-            let startString  = self.formatString(originFormatString: "HH:mm", dateFormatString: dateFormatString, dataString: beginString)
-            let endString1  = self.formatString(originFormatString: "HH:mm", dateFormatString: dateFormatString, dataString: endString)
-            return (startString,endString1)
-        }else if self.dateFormat == .HHmmss {
-            let dateString = "\(hourValue)"+":"+"\(minValue)"+":"+"\(secValue)"
-            let dateFormatString = "HH:mm:ss"
-            let resultString  = self.formatString(originFormatString: "HH:mm:ss", dateFormatString: dateFormatString, dataString: dateString)
+        let month = monthValue > 10 ? ("\(monthValue)") : ("0\(monthValue)")
+        let day = dayValue > 10 ? ("\(dayValue)") : ("0\(dayValue)")
+        let hour = hourValue > 10 ? ("\(hourValue)") : ("0\(hourValue)")
+        let min = minValue > 10 ? ("\(minValue)") : ("0\(minValue)")
+        let sec = secValue > 10 ? ("\(secValue)") : ("0\(secValue)")
+        let eHour = endHour > 10 ? ("\(endHour)") : ("0\(endHour)")
+        let eMin = endMin > 10 ? ("\(endMin)") : ("0\(endMin)")
+        
+        
+        if self.dateFormat == .YYYYMMddHHmm {
+            let resultString = "\(yearValue)"+"/"+"\(month)"+"/"+"\(day)"+" "+"\(hour)"+":"+"\(min)"+":00"
             return (resultString,"")
+            
+        }else if dateFormat == .YYYYMMddHHmm1 {
+            let resultString = "\(yearValue)"+"-"+"\(month)"+"-"+"\(day)"+" "+"\(hour)"+":"+"\(min)"+":00"
+            return (resultString,"")
+        } else if self.dateFormat == .YYYYMMdd  {
+            let resultString = "\(yearValue)"+"-"+"\(month)"+"-"+"\(day)"
+            return (resultString,"")
+            
+        } else if self.dateFormat == .YYYYMMdd1 {
+            let resultString = "\(yearValue)"+"/"+"\(month)"+"/"+"\(day)"
+            return (resultString,"")
+        }
+         else if self.dateFormat == .HHmmHHmm {
+            let beginString = "\(hour)"+":"+"\(min)"
+            let endString = "\(eHour)"+":"+"\(eMin)"
+            return (beginString,endString)
+        }else if self.dateFormat == .HHmmss {
+            let dateString = "\(hour)"+":"+"\(min)"+":"+"\(sec)"
+            return (dateString,"")
         }
         return ("","")
     }
@@ -176,7 +172,7 @@ class WLXDatePicker: UIView {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         let resultData:Date = dateFormatter.date(from: dataString)!
-        let dateFormat1 = DateFormatter.dateFormat(fromTemplate: dateFormatString, options: 0, locale: nil)
+        let dateFormat1 = DateFormatter.dateFormat(fromTemplate: dateFormatString, options: 0, locale: Locale.init(identifier: "zh_CN"))
         let dateFormatter1 = DateFormatter()
         dateFormatter1.dateFormat = dateFormat1
         let dateString  = dateFormatter1.string(from: resultData)
@@ -304,7 +300,7 @@ class WLXDatePicker: UIView {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if dateFormat == .YYYYMMddHHmm || dateFormat == .YYYYMMddHHmm1 {
         if component == 0 {
-            yearValue = row + 2000
+            yearValue = row + beginYear
             if self.monthValue == 2 {
                 self.dayCalculation(month: monthValue, year: yearValue)
                 pickerView.reloadComponent(2)
@@ -324,7 +320,7 @@ class WLXDatePicker: UIView {
         }
         }else if dateFormat == .YYYYMMdd || dateFormat == .YYYYMMdd1 {
             if component == 0 {
-                yearValue = row + 2000
+                yearValue = row + beginYear
                 if self.monthValue == 2 {
                     self.dayCalculation(month: monthValue, year: yearValue)
                     pickerView.reloadComponent(2)

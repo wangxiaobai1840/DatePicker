@@ -194,6 +194,9 @@ class WLXDatePicker: UIView {
         }else if component == 1 { // 月
             return 12
         }else if component == 2 { // 日
+            if dayValue > dayCount {
+                dayValue = dayCount
+            }
             return dayCount
         }else if component == 3 { // 时
             return 24
@@ -206,6 +209,9 @@ class WLXDatePicker: UIView {
             }else if component == 1 { // 月
                 return 12
             }else if component == 2 { // 日
+                if dayValue > dayCount {
+                    dayValue = dayCount
+                }
                 return dayCount
             }
         }else if dateFormat == .HHmmHHmm {
@@ -291,13 +297,11 @@ class WLXDatePicker: UIView {
             if self.monthValue == 2 {
                 self.dayCalculation(month: monthValue, year: yearValue)
                 pickerView.reloadComponent(2)
-                pickerView.selectRow(0, inComponent: 2, animated: true)
             }
         }else if component == 1 {
             monthValue = row + 1
             self.dayCalculation(month:monthValue , year: yearValue)
             pickerView.reloadComponent(2)
-            pickerView.selectRow(0, inComponent: 2, animated: true)
         }else if component == 2 {
             dayValue = row + 1
         }else if component == 3 {
@@ -311,13 +315,11 @@ class WLXDatePicker: UIView {
                 if self.monthValue == 2 {
                     self.dayCalculation(month: monthValue, year: yearValue)
                     pickerView.reloadComponent(2)
-                    pickerView.selectRow(0, inComponent: 2, animated: true)
                 }
             }else if component == 1 {
                 monthValue = row + 1
                 self.dayCalculation(month:monthValue , year: yearValue)
                 pickerView.reloadComponent(2)
-                pickerView.selectRow(0, inComponent: 2, animated: true)
             }else if component == 2 {
                 dayValue = row + 1
             }

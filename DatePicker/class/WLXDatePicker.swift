@@ -132,13 +132,13 @@ class WLXDatePicker: UIView {
     }
     // 格式化选中数据
     fileprivate func formatDate()->(beginString:String,endString:String){
-        let month = monthValue >= 10 ? "\(monthValue)" : "0\(monthValue)"
-        let day = dayValue >= 10 ? "\(dayValue)" : "0\(dayValue)"
-        let hour = hourValue >= 10 ? "\(hourValue)" : "0\(hourValue)"
-        let min = minValue >= 10 ? "\(minValue)" : "0\(minValue)"
-        let sec = secValue >= 10 ? "\(secValue)" : "0\(secValue)"
-        let eHour = endHour >= 10 ? "\(endHour)" : "0\(endHour)"
-        let eMin = endMin >= 10 ? "\(endMin)" : "0\(endMin)"
+        let month = String.init(format:"%02ld", monthValue)
+        let day = String.init(format:"%02ld", dayValue)
+        let hour = String.init(format:"%02ld", hourValue)
+        let min = String.init(format:"%02ld", minValue)
+        let sec = String.init(format:"%02ld", secValue)
+        let eHour = String.init(format:"%02ld", endHour)
+        let eMin = String.init(format:"%02ld", endMin)
         
         
         if self.dateFormat == .YYYYMMddHHmm {

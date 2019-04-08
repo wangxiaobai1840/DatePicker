@@ -250,42 +250,25 @@ class WLXDatePicker: UIView {
         if component == 0 {
             return "\(beginYear + row)"
         }else if component == 3 || component == 4 {
-            if row < 10 {
-                return "0\(row)"
-            }
-            return "\(row)"
+            return String(format: "%02ld", row)
         }
-        if row + 1 < 10 {
-            return "0\(row + 1)"
-        }
-        return "\(row + 1)"
+        return String(format: "%02ld", row + 1)
         }else if dateFormat == .YYYYMMdd || dateFormat == .YYYYMMdd1 {
             if component == 0 {
                 return "\(beginYear + row)"
             }
-            if row + 1 < 10 {
-                return "0\(row + 1)"
-            }
-            return "\(row + 1)"
+
+             return String(format: "%02ld", row + 1)
         }else if dateFormat == .HHmmHHmm {
             if component == 2 {
                 return "--"
             }
-            if row < 10 {
-                return "0\(row)"
-            }
-            return "\(row)"
+            return String(format: "%02ld", row)
         }else if dateFormat == .HHmmss {
             if component == 0 {
-                if row + 1 < 10 {
-                    return "0\(row + 1)"
-                }
-                return "\(row + 1)"
+                return String(format: "%02ld", row + 1)
             }
-            if row < 10 {
-                return "0\(row)"
-            }
-            return "\(row)"
+            return String(format: "%02ld", row)
         }
         return "\(row + 1)"
     }

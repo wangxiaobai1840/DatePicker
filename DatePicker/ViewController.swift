@@ -58,17 +58,22 @@ class ViewController: UIViewController {
          3. beginDate 默认开始时间
          4. endDate默认结束时间
          */
-       let datePicker = WLXDatePicker.init(frame: CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: self.view.frame.height), dateFormat: type, beginYear: 2000, beginDate: begin!, endDate: end!)
+        let datePicker = WLXDatePicker.init(frame: CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: self.view.frame.height), dateFormat: type, beginYear: 2000, beginDate: begin!, endDate: end!)
         datePicker.tag = tag
         
         datePicker.submitActionBlock = { [weak self] beginDate,endDate in
+            var resultStr:String = ""
             if beginDate.count > 0 {
-                print(beginDate)
-               self?.resultLabel.text = beginDate
+                resultStr = beginDate
             }
             if beginDate.count > 0 && endDate.count > 0  {
-                self?.resultLabel.text = beginDate + "-" + endDate
+                resultStr = beginDate + "-" + endDate
             }
+            if !resultStr.isEmpty {
+                let button:UIButton = self?.view.viewWithTag(200+tag-300) as! UIButton
+                button.setTitle(resultStr, for: .normal)
+            }
+            
             UIView.animate(withDuration: 0.4, animations: {
                 datePicker.frame.origin.y = (self?.view.frame.height)!
             })
